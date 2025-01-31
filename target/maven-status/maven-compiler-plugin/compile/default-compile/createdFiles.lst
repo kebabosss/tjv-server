@@ -1,1 +1,5 @@
+fit/bitjv/semestral/domain/Movie.class
+fit/bitjv/semestral/repositories/MovieDAO.class
+fit/bitjv/semestral/rest/MovieRes.class
+fit/bitjv/semestral/repositories/MovieMapRep.class
 fit/bitjv/semestral/SemestralApplication.class
