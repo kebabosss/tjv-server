@@ -9,16 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+
 public class MovieMapRep implements MovieDAO {
     public MovieMapRep() {
         init();
-
-
     }
     @PostConstruct
     void init() {
-        Movie m = createMovie(new Movie("Duna", 2021));
+       Long id = createMovie(new Movie("Duna", 2021));
     }
 
     Map<Long, Movie> movies = new HashMap<>();
@@ -34,14 +32,14 @@ public class MovieMapRep implements MovieDAO {
     }
 
     @Override
-    public Movie createMovie(Movie ent) {
+    public Long createMovie(Movie ent) {
         Long id = movies.keySet().stream()
                 .mapToLong(Long::longValue)
                 .max()
                 .orElse(0L) + 1;
         ent.setId(id);
         movies.put(id, ent);
-        return ent;
+        return ent.getId();
     }
 
     @Override

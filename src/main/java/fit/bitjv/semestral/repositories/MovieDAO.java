@@ -8,9 +8,9 @@ public interface MovieDAO {
 
     List<Movie> allMovies();
 
-    Movie findMovie(Long MovieId);
+    Movie findMovie(Long movieId);
 
-    Movie createMovie(Movie ent);
+    Long createMovie(Movie ent);
 
     void deleteMovie(Long id);
 

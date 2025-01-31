@@ -1,14 +1,36 @@
 package fit.bitjv.semestral.domain;
 
-public class Movie {
-    Long id;
-    String name;
-    int year;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 
-    public Movie(String name, int year) {
+@Entity
+@NamedQuery(name = "allMovies", query = "select movie from Movie movie")
+
+public class Movie {
+    @Id
+    @GeneratedValue
+    Long id;
+    public Movie() {}
+
+    String name;
+    int releaseYear;
+
+    public Movie(String name, int releaseYear) {
         this.name = name;
-        this.year = year;
+        this.releaseYear = releaseYear;
     }
+
+
+    public record MovieDTO( Long id, String name, int year) {}
+    public Movie(MovieDTO movieDTO) {
+        this.name = movieDTO.name;
+        this.releaseYear = movieDTO.year;
+    }
+    public MovieDTO toDTO() { return new MovieDTO(id, name, releaseYear); }
+
+    public String toString() { return toDTO().toString();}
 
     public Long getId() {
         return id;
@@ -26,12 +48,12 @@ public class Movie {
         this.name = name;
     }
 
-    public int getYear() {
-        return year;
+    public int getReleaseYear() {
+        return releaseYear;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setReleaseYear(int year) {
+        this.releaseYear = year;
     }
 
 }
