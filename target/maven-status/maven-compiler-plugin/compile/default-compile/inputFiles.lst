@@ -1,7 +1,9 @@
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/MovieConfig.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/SemestralApplication.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/domain/Movie.java
+/home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/domain/Review.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/repositories/MovieDAO.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/repositories/MovieJPARep.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/repositories/MovieMapRep.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/MovieRes.java
+/home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/ReviewRes.java

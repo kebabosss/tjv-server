@@ -1,6 +1,7 @@
 package fit.bitjv.semestral.repositories;
 
 import fit.bitjv.semestral.domain.Movie;
+import fit.bitjv.semestral.domain.Review;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +46,25 @@ public class MovieMapRep implements MovieDAO {
     @Override
     public void deleteMovie(Long id) {
         movies.remove(id);
+    }
+
+    @Override
+    public List<Review> allReviews() {
+        return null;
+    }
+
+    @Override
+    public Long createReview(Review ent) {
+        return null;
+    }
+
+    @Override
+    public List<Review> reviewsForMovieId(Long movieId) {
+        return null;
+    }
+
+    @Override
+    public void deleteReview(Long id) {
+
     }
 }

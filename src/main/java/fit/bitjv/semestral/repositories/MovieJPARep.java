@@ -1,6 +1,7 @@
 package fit.bitjv.semestral.repositories;
 
 import fit.bitjv.semestral.domain.Movie;
+import fit.bitjv.semestral.domain.Review;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -40,5 +41,35 @@ public class MovieJPARep implements MovieDAO{
     public void deleteMovie(Long id) {
         Movie m = findMovie(id);
         em.remove(m);
+    }
+
+    @Override
+    public List<Review> allReviews() {
+        TypedQuery<Review> q = em.createNamedQuery("allReviews", Review.class);
+        return q.getResultList();
+
+    }
+
+    @Override
+    public Long createReview(Review ent) {
+        em.persist(ent);
+        em.flush();
+        return ent.getId();
+    }
+
+    @Override
+    public List<Review> reviewsForMovieId(Long movieId) {
+        TypedQuery<Review> tq = em.createNamedQuery("reviewsForMovieId", Review.class);
+        tq.setParameter("movieId", movieId);
+        return tq.getResultList();
+
+    }
+
+    @Override
+    public void deleteReview(Long id) {
+        Review review = em.find(Review.class, id);
+        em.remove(review);
+
+
     }
 }

@@ -1,9 +1,8 @@
 package fit.bitjv.semestral.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.NamedQuery;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @NamedQuery(name = "allMovies", query = "select movie from Movie movie")
@@ -13,6 +12,10 @@ public class Movie {
     @GeneratedValue
     Long id;
     public Movie() {}
+
+    @OneToMany(mappedBy = "movie", orphanRemoval = true)
+    List<Review> reviews;
+
 
     String name;
     int releaseYear;
