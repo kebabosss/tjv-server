@@ -5,35 +5,42 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@NamedQuery(name = "allMovies", query = "select movie from Movie movie")
-
-public class Movie {
+//@NamedQuery(name = "allMovies", query = "select movie from Movie movie")
+public class Movie implements EntityWithID<Long> {
     @Id
     @GeneratedValue
     Long id;
-    public Movie() {}
-
     @OneToMany(mappedBy = "movie", orphanRemoval = true)
     List<Review> reviews;
 
+    @ManyToMany(mappedBy = "moviesDirected")
+    private List<Director> directors;
 
     String name;
     int releaseYear;
+
+    public Movie() {}
 
     public Movie(String name, int releaseYear) {
         this.name = name;
         this.releaseYear = releaseYear;
     }
 
-
-    public record MovieDTO( Long id, String name, int year) {}
-    public Movie(MovieDTO movieDTO) {
-        this.name = movieDTO.name;
-        this.releaseYear = movieDTO.year;
+    public List<Review> getReviews() {
+        return reviews;
     }
-    public MovieDTO toDTO() { return new MovieDTO(id, name, releaseYear); }
 
-    public String toString() { return toDTO().toString();}
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Director> getDirectors() {
+        return directors;
+    }
+
+    public void setDirectors(List<Director> directors) {
+        this.directors = directors;
+    }
 
     public Long getId() {
         return id;
