@@ -3,39 +3,43 @@ package fit.bitjv.semestral.rest;
 
 import fit.bitjv.semestral.domain.Review;
 import fit.bitjv.semestral.rest.dto.ReviewDTO;
+import fit.bitjv.semestral.rest.dto.ReviewMapper;
+import fit.bitjv.semestral.service.MovieService;
 import fit.bitjv.semestral.service.ReviewService;
-import jakarta.servlet.http.HttpServletRequest;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.net.URI;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("rest/review")
 public class ReviewController {
     ReviewService reviewServiceService;
-    private final ModelMapper modelMapper;
+    MovieService movieService;
+    private final ReviewMapper reviewMapper;
 
 
-    public ReviewController(ReviewService reviewServiceService, ModelMapper modelMapper) {
+    public ReviewController(ReviewService reviewServiceService, MovieService movieService) {
         this.reviewServiceService = reviewServiceService;
-        this.modelMapper = modelMapper;
+        this.movieService = movieService;
+        reviewMapper = new ReviewMapper(movieService);
     }
 
     @GetMapping
     List<ReviewDTO> ReadAll() {
-        return ConvertManyToDTO(reviewServiceService.ReadAll());
+        return reviewServiceService.ReadAll().stream()
+                .map(reviewMapper::toDTO)
+                .toList();
     }
 
     @GetMapping("/{id}")
     ReviewDTO ReadByID(@PathVariable Long id){
         try {
-            return ConvertToDTO(reviewServiceService.ReadById(id));
+            return reviewMapper.toDTO(reviewServiceService.ReadById(id));
         }
         catch (IllegalArgumentException e)
         {
@@ -46,9 +50,9 @@ public class ReviewController {
 
 
     @PostMapping
-    public Review Create(@RequestBody ReviewDTO reviewDTO) {
+    public ReviewDTO Create(@RequestBody ReviewDTO reviewDTO) {
         try {
-            return reviewServiceService.Create(ConvertToEntity(reviewDTO));
+            return reviewMapper.toDTO(reviewServiceService.Create(reviewMapper.toEntity(reviewDTO)));
         } catch (IllegalArgumentException e)
         {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
@@ -56,12 +60,12 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
-    public Review Update(@RequestBody ReviewDTO review, @PathVariable Long id)
+    public ReviewDTO Update(@RequestBody ReviewDTO review, @PathVariable Long id)
     {
         try{
-            Review newReview = ConvertToEntity(review);
+            Review newReview = reviewMapper.toEntity(review);
             newReview.setId(id);
-            return reviewServiceService.Update(ConvertToEntity(ConvertToDTO(newReview)));
+            return reviewMapper.toDTO(reviewServiceService.Update(newReview));
         }
         catch (IllegalArgumentException e)
         {
@@ -79,21 +83,5 @@ public class ReviewController {
         {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-    }
-
-    private ReviewDTO ConvertToDTO(Review review)
-    {
-        return modelMapper.map(review, ReviewDTO.class);
-    }
-
-    private Review ConvertToEntity(ReviewDTO reviewDTO)
-    {
-        return modelMapper.map(reviewDTO, Review.class);
-    }
-
-    private List<ReviewDTO> ConvertManyToDTO(List<Review> reviews) {
-        return reviews.stream()
-                .map(this::ConvertToDTO)
-                .toList();
     }
 }

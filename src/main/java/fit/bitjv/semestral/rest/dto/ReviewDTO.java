@@ -4,6 +4,7 @@ import fit.bitjv.semestral.domain.Movie;
 import jakarta.persistence.ManyToOne;
 
 public class ReviewDTO {
+    Long reviewId;
     String reviewText;
     int rating;
     Long movieId;
@@ -11,10 +12,19 @@ public class ReviewDTO {
     public ReviewDTO() {
     }
 
-    public ReviewDTO(String reviewText, int rating, Long movieId) {
+    public ReviewDTO(Long reviewId, String reviewText, int rating, Long movieId) {
+        this.reviewId = reviewId;
         this.reviewText = reviewText;
         this.rating = rating;
         this.movieId = movieId;
+    }
+
+    public Long getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(Long reviewId) {
+        this.reviewId = reviewId;
     }
 
     public String getReviewText() {

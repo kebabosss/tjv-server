@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 
 
 @Entity
-/*@NamedQuery(name = "reviewsForMovieId", query =
-        "SELECT r FROM Review r JOIN r.movie c WHERE c.id = :movieId")*/
-//@NamedQuery(name = "allReviews", query = "select review from Review review")
 public class Review implements EntityWithID<Long> {
     @Id
     @GeneratedValue

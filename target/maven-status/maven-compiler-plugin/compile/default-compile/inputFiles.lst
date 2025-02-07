@@ -11,10 +11,15 @@
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/repository/DirectorRepository.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/repository/MovieRepository.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/repository/ReviewRepository.java
+/home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/DirectorController.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/MovieController.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/ReviewController.java
+/home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/dto/DirectorDTO.java
+/home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/dto/DirectorMapper.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/dto/MovieDTO.java
+/home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/dto/MovieMapper.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/dto/ReviewDTO.java
+/home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/rest/dto/ReviewMapper.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/service/AbstractCrudService.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/service/DirectorServices.java
 /home/kebabossss/semestral-server/src/main/java/fit/bitjv/semestral/service/MovieService.java

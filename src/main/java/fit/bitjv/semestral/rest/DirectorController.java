@@ -1,11 +1,12 @@
 package fit.bitjv.semestral.rest;
 
+import fit.bitjv.semestral.domain.Director;
 import fit.bitjv.semestral.domain.Movie;
+import fit.bitjv.semestral.rest.dto.DirectorDTO;
+import fit.bitjv.semestral.rest.dto.DirectorMapper;
 import fit.bitjv.semestral.rest.dto.MovieDTO;
-import fit.bitjv.semestral.rest.dto.MovieMapper;
 import fit.bitjv.semestral.service.DirectorServices;
 import fit.bitjv.semestral.service.MovieService;
-import fit.bitjv.semestral.service.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,32 +14,29 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("rest/movie")
-public class MovieController {
-
-    MovieService movieService;
+@RequestMapping("rest/director")
+public class DirectorController {
     DirectorServices directorServices;
-    ReviewService reviewService;
-    private final MovieMapper movieMapper;
+    MovieService movieService;
+    private final DirectorMapper directorMapper;
 
-    public MovieController(MovieService movieService, DirectorServices directorServices, ReviewService reviewService) {
-        this.movieService = movieService;
+    public DirectorController(DirectorServices directorServices, MovieService movieService) {
         this.directorServices = directorServices;
-        this.reviewService = reviewService;
-        movieMapper = new MovieMapper(directorServices, reviewService);
+        this.movieService = movieService;
+        directorMapper = new DirectorMapper(movieService);
     }
 
     @GetMapping
-    List<MovieDTO> ReadAll() {
-        return movieService.ReadAll().stream()
-                .map(movieMapper::toDTO)
+    List<DirectorDTO> ReadAll() {
+        return directorServices.ReadAll().stream()
+                .map(directorMapper::toDTO)
                 .toList();
     }
 
     @GetMapping("/{id}")
-    MovieDTO ReadByID(@PathVariable Long id){
+    DirectorDTO ReadByID(@PathVariable Long id){
         try {
-            return movieMapper.toDTO(movieService.ReadById(id));
+            return directorMapper.toDTO(directorServices.ReadById(id));
         }
         catch (IllegalArgumentException e)
         {
@@ -49,9 +47,9 @@ public class MovieController {
 
 
     @PostMapping
-    public MovieDTO Create(@RequestBody MovieDTO movie) {
+    public DirectorDTO Create(@RequestBody DirectorDTO directorDTO) {
         try {
-            return movieMapper.toDTO(movieService.Create(movieMapper.toEntity(movie)));
+            return directorMapper.toDTO(directorServices.Create(directorMapper.toEntity(directorDTO)));
         } catch (IllegalArgumentException e)
         {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
@@ -59,12 +57,12 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
-    public MovieDTO Update(@RequestBody MovieDTO movieDTO, @PathVariable Long id)
+    public DirectorDTO Update(@RequestBody DirectorDTO directorDTO, @PathVariable Long id)
     {
         try{
-            Movie newMovie = movieMapper.toEntity(movieDTO);
-            newMovie.setId(id);
-            return movieMapper.toDTO(movieService.Update(newMovie));
+            Director newDirector = directorMapper.toEntity(directorDTO);
+            newDirector.setId(id);
+            return directorMapper.toDTO(directorServices.Update(newDirector));
         }
         catch (IllegalArgumentException e)
         {
@@ -76,7 +74,7 @@ public class MovieController {
     public void Delete(@PathVariable Long id)
     {
         try {
-            movieService.DeleteById(id);
+            directorServices.DeleteById(id);
         }
         catch (IllegalArgumentException e)
         {

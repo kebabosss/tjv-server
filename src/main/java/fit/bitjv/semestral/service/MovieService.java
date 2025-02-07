@@ -1,5 +1,6 @@
 package fit.bitjv.semestral.service;
 
+import fit.bitjv.semestral.domain.Director;
 import fit.bitjv.semestral.domain.Movie;
 import fit.bitjv.semestral.domain.Review;
 import fit.bitjv.semestral.repository.MovieRepository;
@@ -11,9 +12,13 @@ import java.util.Optional;
 
 @Service
 public class MovieService extends AbstractCrudService<Movie, Long>{
-    public MovieService(MovieRepository repository) {
+    DirectorServices directorServices;
+
+    public MovieService(JpaRepository<Movie, Long> repository, DirectorServices directorServices) {
         super(repository);
+        this.directorServices = directorServices;
     }
+
 
     //returns average score for this movie. -1 if there´s no review yet
     public double MovieScoreById(Long id)
@@ -31,5 +36,18 @@ public class MovieService extends AbstractCrudService<Movie, Long>{
             result += review.getRating();
         }
         return result / reviews.size();
+    }
+
+    @Override
+    public void DeleteById(Long Id) {
+        Movie movie = repository.findById(Id)
+                .orElseThrow(IllegalArgumentException::new);
+
+        for (Director director : movie.getDirectors()) {
+            director.removeMovie(movie);
+            directorServices.Update(director);
+        }
+
+        repository.delete(movie);
     }
 }

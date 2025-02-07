@@ -10,7 +10,7 @@ public class Movie implements EntityWithID<Long> {
     @Id
     @GeneratedValue
     Long id;
-    @OneToMany(mappedBy = "movie", orphanRemoval = true)
+    @OneToMany(mappedBy = "movie", orphanRemoval = true, cascade = CascadeType.REMOVE)
     List<Review> reviews;
 
     @ManyToMany(mappedBy = "moviesDirected")
