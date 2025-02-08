@@ -16,4 +16,6 @@ public class ReviewService extends AbstractCrudService<Review,Long> {
     {
         return repository.findAllById(Ids);
     }
+
+    public List<Review> findAllByMovieId(Long movieId) {return ((ReviewRepository)repository).findReviewByMovieId(movieId);}
 }

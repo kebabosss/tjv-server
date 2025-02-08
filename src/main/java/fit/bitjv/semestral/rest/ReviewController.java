@@ -15,6 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("rest/review")
 public class ReviewController {
@@ -45,6 +46,13 @@ public class ReviewController {
         {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("movie/{movieID}")
+    List<ReviewDTO> ReadByMovieId(@PathVariable Long movieID) {
+        return reviewServiceService.findAllByMovieId(movieID).stream()
+                .map(reviewMapper::toDTO)
+                .toList();
     }
 
 
