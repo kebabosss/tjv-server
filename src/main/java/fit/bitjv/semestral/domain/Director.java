@@ -58,9 +58,12 @@ public class Director implements EntityWithID<Long>{
         this.yearOfBirth = yearOfBirth;
     }
 
+    public void addMovie(Movie movie)
+    {
+        moviesDirected.add(movie);
+    }
     public void removeMovie(Movie movie) {
         moviesDirected.remove(movie);
-       // movie.getDirectors().remove(this);
     }
 
 }

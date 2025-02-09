@@ -51,8 +51,8 @@ public class DirectorController {
                 .toList();
     }
 
-    @GetMapping("/name={name};year={year}")
-    List<DirectorDTO> ReadByNameAndYear(@PathVariable String name,@PathVariable int year){
+    @GetMapping("/director")
+    List<DirectorDTO> ReadByNameAndYear(@RequestParam String name,@RequestParam int year){
         return directorServices.findAllByNameAndYear(name, year).stream()
                 .map(directorMapper::toDTO)
                 .toList();

@@ -7,6 +7,7 @@ import fit.bitjv.semestral.service.DirectorServices;
 import fit.bitjv.semestral.service.ReviewService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class MovieMapper {
@@ -25,7 +26,8 @@ public class MovieMapper {
         movie.setName(movieDTO.getName());
         movie.setReleaseYear(movieDTO.getReleaseYear());
 
-        List<Director> directors = directorServices.findAllById(movieDTO.getDirectors());
+        List<Director> directors = directorServices.findAllById((new HashSet<>(movieDTO.getDirectors())).stream().toList());
+        movie.setDirectors(directors);
         movie.setDirectors(directors);
         if (movieDTO.getReviews() != null) {
             List<Review> reviews = reviewService.findAllById(movieDTO.getReviews());
