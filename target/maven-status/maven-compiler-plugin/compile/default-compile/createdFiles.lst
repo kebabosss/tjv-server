@@ -15,6 +15,7 @@ fit/bitjv/semestral/MovieConfig.class
 fit/bitjv/semestral/rest/ReviewController.class
 fit/bitjv/semestral/repositoriesOld/MovieDAO.class
 fit/bitjv/semestral/domain/Review.class
+fit/bitjv/semestral/CorsConfig.class
 fit/bitjv/semestral/rest/MovieController.class
 fit/bitjv/semestral/rest/DirectorController.class
 fit/bitjv/semestral/service/MovieService.class
@@ -22,6 +23,7 @@ fit/bitjv/semestral/rest/dto/MovieDTO.class
 fit/bitjv/semestral/repositoriesOld/MovieMapRep.class
 fit/bitjv/semestral/repositoriesOld/MovieRep.class
 fit/bitjv/semestral/rest/dto/DirectorMapper.class
+fit/bitjv/semestral/CorsConfig$1.class
 fit/bitjv/semestral/repository/DirectorRepository.class
 fit/bitjv/semestral/service/ReviewService.class
 fit/bitjv/semestral/SemestralApplication.class

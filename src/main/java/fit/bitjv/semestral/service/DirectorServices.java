@@ -17,4 +17,14 @@ public class DirectorServices extends AbstractCrudService<Director,Long> {
     {
        return repository.findAllById(Ids);
     }
+
+    public List<Director> findAllByNameAndYear(String name, int yearBorn)
+    {
+        return ((DirectorRepository)repository).findAllByNameAndYearOfBirth(name, yearBorn);
+    }
+
+    public List<Director> findAllByMovieId(Long movieId)
+    {
+        return ((DirectorRepository)repository).findAllByMoviesDirected_Id(movieId);
+    }
 }

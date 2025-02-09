@@ -19,23 +19,9 @@ public class MovieService extends AbstractCrudService<Movie, Long>{
         this.directorServices = directorServices;
     }
 
-
-    //returns average score for this movie. -1 if there´s no review yet
-    public double MovieScoreById(Long id)
+    public int countGoodMovie()
     {
-        Optional<Movie> movie = repository.findById(id);
-        if(movie.isEmpty())
-            throw new IllegalArgumentException();
-        List<Review> reviews = repository.findById(id).get().getReviews();
-        if(reviews.isEmpty())
-        {
-            return -1;
-        }
-        double result = 0;
-        for (Review review : reviews) {
-            result += review.getRating();
-        }
-        return result / reviews.size();
+        return ((MovieRepository)repository).countGoodMovies();
     }
 
     @Override

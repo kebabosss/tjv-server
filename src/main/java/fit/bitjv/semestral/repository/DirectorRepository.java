@@ -8,4 +8,6 @@ import java.util.List;
 
 @Repository
 public interface DirectorRepository extends JpaRepository<Director,Long> {
+    List<Director> findAllByNameAndYearOfBirth(String name, int yearBorn);
+    List<Director> findAllByMoviesDirected_Id(Long id);
 }

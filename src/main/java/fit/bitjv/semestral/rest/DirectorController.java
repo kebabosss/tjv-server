@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@CrossOrigin
 @RestController
 @RequestMapping("rest/director")
 public class DirectorController {
@@ -45,11 +44,26 @@ public class DirectorController {
         }
     }
 
+    @GetMapping("/movie/{id}")
+    List<DirectorDTO> ReadByMovieID(@PathVariable Long id){
+       return directorServices.findAllByMovieId(id).stream()
+                .map(directorMapper::toDTO)
+                .toList();
+    }
+
+    @GetMapping("/name={name};year={year}")
+    List<DirectorDTO> ReadByNameAndYear(@PathVariable String name,@PathVariable int year){
+        return directorServices.findAllByNameAndYear(name, year).stream()
+                .map(directorMapper::toDTO)
+                .toList();
+    }
+
 
 
     @PostMapping
     public DirectorDTO Create(@RequestBody DirectorDTO directorDTO) {
         try {
+            directorDTO.setId(null);
             return directorMapper.toDTO(directorServices.Create(directorMapper.toEntity(directorDTO)));
         } catch (IllegalArgumentException e)
         {

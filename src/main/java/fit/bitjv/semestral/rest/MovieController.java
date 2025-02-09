@@ -12,7 +12,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@CrossOrigin
 @RestController
 @RequestMapping("rest/movie")
 public class MovieController {
@@ -47,11 +46,15 @@ public class MovieController {
         }
     }
 
-
+    @GetMapping("/countGood")
+    int countGoodMovies() {
+        return movieService.countGoodMovie();
+    }
 
     @PostMapping
     public MovieDTO Create(@RequestBody MovieDTO movie) {
         try {
+            movie.setId(null);
             return movieMapper.toDTO(movieService.Create(movieMapper.toEntity(movie)));
         } catch (IllegalArgumentException e)
         {
