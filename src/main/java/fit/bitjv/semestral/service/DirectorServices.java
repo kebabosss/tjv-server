@@ -13,12 +13,10 @@ import java.util.List;
 
 @Service
 public class DirectorServices extends AbstractCrudService<Director,Long> {
-    MovieService movieService;
 
     @Autowired
-    public DirectorServices(JpaRepository<Director, Long> repository, MovieService movieRepository) {
+    public DirectorServices(JpaRepository<Director, Long> repository) {
         super(repository);
-        this.movieService = movieRepository;
     }
     public List<Director> findAllById(List<Long> Ids)
     {
@@ -33,32 +31,5 @@ public class DirectorServices extends AbstractCrudService<Director,Long> {
     public List<Director> findAllByMovieId(Long movieId)
     {
         return ((DirectorRepository)repository).findAllByMoviesDirected_Id(movieId);
-    }
-
-    @Transactional
-    @Override
-    public Director Update(Director updatedDirector) {
-        Director existingDirector = repository.findById(updatedDirector.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Director not found"));
-
-        existingDirector.setName(updatedDirector.getName());
-        existingDirector.setMoviesDirected(updatedDirector.getMoviesDirected());
-        existingDirector.setYearOfBirth(updatedDirector.getYearOfBirth());
-
-
-        Director savedDirector = repository.save(existingDirector);
-
-        List<Movie> moviesWithoutDirectors = movieService.ReadAll()
-                .stream()
-                .filter(movie -> movie.getDirectors().isEmpty())
-                .toList();  // Použijeme `toList()` pro nový seznam, abychom se vyhnuli ConcurrentModificationException
-
-        for (Movie movie : moviesWithoutDirectors) {
-            System.out.println("Deleting movie without director: " + movie.getName());
-            movieService.DeleteById(movie.getId());
-            movieService.repository.flush();
-        }
-
-        return savedDirector;
     }
 }

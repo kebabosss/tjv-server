@@ -82,4 +82,19 @@ public class MovieService extends AbstractCrudService<Movie, Long>{
         }
         return repository.save(existingMovie);
     }
+
+    @Transactional
+    public void RemoveNoDirMovies()
+    {
+        List<Movie> moviesWithoutDirectors = repository.findAll()
+                .stream()
+                .filter(movie -> movie.getDirectors().isEmpty())
+                .toList();
+
+        for (Movie movie : moviesWithoutDirectors) {
+            System.out.println("Deleting movie without director: " + movie.getName());
+            repository.delete(movie);
+            repository.flush();
+        }
+    }
 }

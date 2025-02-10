@@ -24,6 +24,7 @@ public class MovieController {
     private final MovieMapper movieMapper;
 
     public MovieController(MovieService movieService, DirectorServices directorServices, ReviewService reviewService) {
+        movieService.RemoveNoDirMovies();
         this.movieService = movieService;
         this.directorServices = directorServices;
         this.reviewService = reviewService;
@@ -32,6 +33,7 @@ public class MovieController {
 
     @GetMapping
     List<MovieDTO> ReadAll() {
+        movieService.RemoveNoDirMovies();
         return movieService.ReadAll().stream()
                 .map(movieMapper::toDTO)
                 .toList();
@@ -39,6 +41,7 @@ public class MovieController {
 
     @GetMapping("/{id}")
     MovieDTO ReadByID(@PathVariable Long id){
+        movieService.RemoveNoDirMovies();
         try {
             return movieMapper.toDTO(movieService.ReadById(id));
         }
@@ -49,6 +52,7 @@ public class MovieController {
     }
     @GetMapping("/movie")
     List<MovieDTO> ReadByNameAndYear(@RequestParam String name, @RequestParam int year){
+        movieService.RemoveNoDirMovies();
         return movieService.findAllByNameAndYear(name, year).stream()
                 .map(movieMapper::toDTO)
                 .toList();
@@ -57,6 +61,8 @@ public class MovieController {
     @GetMapping("/director/{Id}")
     List<MovieDTO> ReadByDirectorId(@PathVariable Long Id)
     {
+        movieService.RemoveNoDirMovies();
+
         return movieService.findAllByDirectorId(Id).stream()
                 .map(movieMapper::toDTO)
                 .toList();
@@ -64,11 +70,14 @@ public class MovieController {
 
     @GetMapping("/countGood")
     int countGoodMovies() {
+
+        movieService.RemoveNoDirMovies();
         return movieService.countGoodMovie();
     }
 
     @PostMapping
     public MovieDTO Create(@RequestBody MovieDTO movie) {
+        movieService.RemoveNoDirMovies();
         try {
             movie.setId(null);
             return movieMapper.toDTO(movieService.Create(movieMapper.toEntity(movie)));
@@ -81,6 +90,7 @@ public class MovieController {
     @PutMapping("/{id}")
     public MovieDTO Update(@RequestBody MovieDTO movieDTO, @PathVariable Long id)
     {
+        movieService.RemoveNoDirMovies();
         try{
             Movie newMovie = movieMapper.toEntity(movieDTO);
             newMovie.setId(id);
@@ -95,6 +105,7 @@ public class MovieController {
     @DeleteMapping("/{id}")
     public void Delete(@PathVariable Long id)
     {
+        movieService.RemoveNoDirMovies();
         try {
             movieService.DeleteById(id);
         }
