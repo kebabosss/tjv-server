@@ -1,11 +1,13 @@
 package fit.bitjv.semestral.rest;
 
 import fit.bitjv.semestral.domain.Movie;
+import fit.bitjv.semestral.rest.dto.DirectorDTO;
 import fit.bitjv.semestral.rest.dto.MovieDTO;
 import fit.bitjv.semestral.rest.dto.MovieMapper;
 import fit.bitjv.semestral.service.DirectorServices;
 import fit.bitjv.semestral.service.MovieService;
 import fit.bitjv.semestral.service.ReviewService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -44,6 +46,20 @@ public class MovieController {
         {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+    @GetMapping("/movie")
+    List<MovieDTO> ReadByNameAndYear(@RequestParam String name, @RequestParam int year){
+        return movieService.findAllByNameAndYear(name, year).stream()
+                .map(movieMapper::toDTO)
+                .toList();
+    }
+
+    @GetMapping("/director/{Id}")
+    List<MovieDTO> ReadByDirectorId(@PathVariable Long Id)
+    {
+        return movieService.findAllByDirectorId(Id).stream()
+                .map(movieMapper::toDTO)
+                .toList();
     }
 
     @GetMapping("/countGood")

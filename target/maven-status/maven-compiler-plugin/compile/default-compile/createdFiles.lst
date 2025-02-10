@@ -2,7 +2,6 @@ fit/bitjv/semestral/domain/EntityWithID.class
 fit/bitjv/semestral/domain/Review$ReviewDTO.class
 fit/bitjv/semestral/rest/dto/MovieMapper.class
 fit/bitjv/semestral/rest/dto/ReviewMapper.class
-fit/bitjv/semestral/repositoriesOld/MovieJPARep.class
 fit/bitjv/semestral/repository/MovieRepository.class
 fit/bitjv/semestral/repository/ReviewRepository.class
 fit/bitjv/semestral/rest/dto/DirectorDTO.class
@@ -11,17 +10,13 @@ fit/bitjv/semestral/domain/Director.class
 fit/bitjv/semestral/domain/Movie.class
 fit/bitjv/semestral/rest/dto/ReviewDTO.class
 fit/bitjv/semestral/service/DirectorServices.class
-fit/bitjv/semestral/MovieConfig.class
 fit/bitjv/semestral/rest/ReviewController.class
-fit/bitjv/semestral/repositoriesOld/MovieDAO.class
 fit/bitjv/semestral/domain/Review.class
 fit/bitjv/semestral/CorsConfig.class
 fit/bitjv/semestral/rest/MovieController.class
 fit/bitjv/semestral/rest/DirectorController.class
 fit/bitjv/semestral/service/MovieService.class
 fit/bitjv/semestral/rest/dto/MovieDTO.class
-fit/bitjv/semestral/repositoriesOld/MovieMapRep.class
-fit/bitjv/semestral/repositoriesOld/MovieRep.class
 fit/bitjv/semestral/rest/dto/DirectorMapper.class
 fit/bitjv/semestral/CorsConfig$1.class
 fit/bitjv/semestral/repository/DirectorRepository.class

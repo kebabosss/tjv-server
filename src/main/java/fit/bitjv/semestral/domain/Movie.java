@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-//@NamedQuery(name = "allMovies", query = "select movie from Movie movie")
 public class Movie implements EntityWithID<Long> {
     @Id
     @GeneratedValue
@@ -13,7 +12,7 @@ public class Movie implements EntityWithID<Long> {
     @OneToMany(mappedBy = "movie", orphanRemoval = true, cascade = CascadeType.REMOVE)
     List<Review> reviews;
 
-    @ManyToMany(mappedBy = "moviesDirected")
+    @ManyToMany(mappedBy = "moviesDirected", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Director> directors;
 
     String name;
