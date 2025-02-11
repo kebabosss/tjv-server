@@ -17,7 +17,7 @@ services:
 before_script:
   - apk update && apk add curl
   - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /tmp/docker-compose
-  - chmod +x /usr/local/bin/docker-compose
+  - chmod +x /tmp/docker-compose
   - docker info 
 
 test:
