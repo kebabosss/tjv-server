@@ -7,6 +7,7 @@ import fit.bitjv.semestral.rest.dto.MovieMapper;
 import fit.bitjv.semestral.service.DirectorServices;
 import fit.bitjv.semestral.service.MovieService;
 import fit.bitjv.semestral.service.ReviewService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class MovieController {
         movieMapper = new MovieMapper(directorServices, reviewService);
     }
 
+    @Operation(summary = "Get all movies", description = "Returns all movies")
     @GetMapping
     List<MovieDTO> ReadAll() {
         movieService.RemoveNoDirMovies();
@@ -39,6 +41,7 @@ public class MovieController {
                 .toList();
     }
 
+    @Operation(summary = "Get movie by id", description = "Returns movie found by given id")
     @GetMapping("/{id}")
     MovieDTO ReadByID(@PathVariable Long id){
         movieService.RemoveNoDirMovies();
@@ -50,6 +53,8 @@ public class MovieController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
+
+    @Operation(summary = "Get movies by name and year", description = "Returns all movies found by given name and yearReleased combination")
     @GetMapping("/movie")
     List<MovieDTO> ReadByNameAndYear(@RequestParam String name, @RequestParam int year){
         movieService.RemoveNoDirMovies();
@@ -58,6 +63,7 @@ public class MovieController {
                 .toList();
     }
 
+    @Operation(summary = "Get all movies by director id", description = "Returns all movies directed by director found by given id")
     @GetMapping("/director/{Id}")
     List<MovieDTO> ReadByDirectorId(@PathVariable Long Id)
     {
@@ -68,6 +74,7 @@ public class MovieController {
                 .toList();
     }
 
+    @Operation(summary = "Count number of good movies", description = "Returns number of movies that have at least one review with rating 4 or higher")
     @GetMapping("/countGood")
     int countGoodMovies() {
 
@@ -75,6 +82,7 @@ public class MovieController {
         return movieService.countGoodMovie();
     }
 
+    @Operation(summary = "Create new movie", description = "Returns newly created movie")
     @PostMapping
     public MovieDTO Create(@RequestBody MovieDTO movie) {
         movieService.RemoveNoDirMovies();
@@ -87,6 +95,7 @@ public class MovieController {
         }
     }
 
+    @Operation(summary = "Update movie", description = "Returns updated movie found by given id")
     @PutMapping("/{id}")
     public MovieDTO Update(@RequestBody MovieDTO movieDTO, @PathVariable Long id)
     {
@@ -108,6 +117,7 @@ public class MovieController {
         }
     }
 
+    @Operation(summary = "Delete movie", description = "Deletes movie found by given id")
     @DeleteMapping("/{id}")
     public void Delete(@PathVariable Long id)
     {

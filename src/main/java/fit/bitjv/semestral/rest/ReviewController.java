@@ -7,6 +7,7 @@ import fit.bitjv.semestral.rest.dto.ReviewMapper;
 import fit.bitjv.semestral.service.MovieService;
 import fit.bitjv.semestral.service.ReviewService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class ReviewController {
         reviewMapper = new ReviewMapper(movieService);
     }
 
+    @Operation(summary = "Get all reviews", description = "Returns all reviews")
     @GetMapping
     List<ReviewDTO> ReadAll() {
         return reviewService.ReadAll().stream()
@@ -36,6 +38,7 @@ public class ReviewController {
                 .toList();
     }
 
+    @Operation(summary = "Get review by id", description = "Returns review found by given id")
     @GetMapping("/{id}")
     ReviewDTO ReadByID(@PathVariable Long id){
         try {
@@ -47,6 +50,7 @@ public class ReviewController {
         }
     }
 
+    @Operation(summary = "Get reviews by movie id", description = "Returns all reviews that are connected to movie found by given id")
     @GetMapping("movie/{movieID}")
     List<ReviewDTO> ReadByMovieId(@PathVariable Long movieID) {
         return reviewService.findAllByMovieId(movieID).stream()
@@ -55,7 +59,7 @@ public class ReviewController {
     }
 
 
-
+    @Operation(summary = "Create review", description = "Returns newly created review")
     @PostMapping
     public ReviewDTO Create(@RequestBody ReviewDTO reviewDTO) {
         try {
@@ -67,6 +71,7 @@ public class ReviewController {
         }
     }
 
+    @Operation(summary = "Update review", description = "Returns updated review found by given id")
     @PutMapping("/{id}")
     public ReviewDTO Update(@RequestBody ReviewDTO review, @PathVariable Long id)
     {
@@ -81,6 +86,7 @@ public class ReviewController {
         }
     }
 
+    @Operation(summary = "Delete review", description = "Deletes review found by given id")
     @DeleteMapping("/{id}")
     public void Delete(@PathVariable Long id)
     {

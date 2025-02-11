@@ -7,6 +7,8 @@ import fit.bitjv.semestral.rest.dto.DirectorMapper;
 import fit.bitjv.semestral.rest.dto.MovieDTO;
 import fit.bitjv.semestral.service.DirectorServices;
 import fit.bitjv.semestral.service.MovieService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,6 +28,7 @@ public class DirectorController {
         directorMapper = new DirectorMapper(movieService);
     }
 
+    @Operation(summary = "Get all directors", description = "Returns all directors")
     @GetMapping
     List<DirectorDTO> ReadAll() {
         return directorServices.ReadAll().stream()
@@ -33,6 +36,8 @@ public class DirectorController {
                 .toList();
     }
 
+    // @Parameter(name = "id", description = "Director id", example = "1")
+    @Operation(summary = "Get directors by id", description = "Returns director found by given id")
     @GetMapping("/{id}")
     DirectorDTO ReadByID(@PathVariable Long id){
         try {
@@ -43,7 +48,7 @@ public class DirectorController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
     }
-
+    @Operation(summary = "Get directors that directed movie", description = "Returns all directors that directed movie found by given id")
     @GetMapping("/movie/{id}")
     List<DirectorDTO> ReadByMovieID(@PathVariable Long id){
        return directorServices.findAllByMovieId(id).stream()
@@ -51,6 +56,7 @@ public class DirectorController {
                 .toList();
     }
 
+    @Operation(summary = "Get directors by name and year born", description = "Returns all directors that were found by given name and yearBorn combination")
     @GetMapping("/director")
     List<DirectorDTO> ReadByNameAndYear(@RequestParam String name,@RequestParam int year){
         return directorServices.findAllByNameAndYear(name, year).stream()
@@ -59,7 +65,7 @@ public class DirectorController {
     }
 
 
-
+    @Operation(summary = "Creates new director", description = "Returns newly created director")
     @PostMapping
     public DirectorDTO Create(@RequestBody DirectorDTO directorDTO) {
         try {
@@ -71,6 +77,7 @@ public class DirectorController {
         }
     }
 
+    @Operation(summary = "Updates director", description = "Returns updated director found by given id")
     @PutMapping("/{id}")
     public DirectorDTO Update(@RequestBody DirectorDTO directorDTO, @PathVariable Long id)
     {
@@ -91,6 +98,7 @@ public class DirectorController {
         }
     }
 
+    @Operation(summary = "Delete director", description = "Deletes director found by given id")
     @DeleteMapping("/{id}")
     public void Delete(@PathVariable Long id)
     {
