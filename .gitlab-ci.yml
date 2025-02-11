@@ -1,28 +1,28 @@
 stages:
   - setup
   - test
-  - deploy
 
 variables:
   POSTGRES_DB: movie_postgres
   POSTGRES_USER: admin
   POSTGRES_PASSWORD: admin
   POSTGRES_HOST: localhost
-  POSTGRES_PORT: 5454
-
+  POSTGRES_PORT: 5454  
 services:
   - name: docker:19.03.12-dind
     alias: docker
 
 before_script:
-  - apk update && apk add curl
+  - apk update && apk add curl bash
   - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /tmp/docker-compose
   - chmod +x /tmp/docker-compose
-  - docker info 
+  - mv /tmp/docker-compose /usr/local/bin/docker-compose
+  - docker info
 
 test:
   stage: test
   script:
     - echo "Waiting for PostgreSQL to start"
-    - dockerize -wait tcp://localhost:5432 -timeout 1m 
+    - docker run --name postgres -d -e POSTGRES_DB=$POSTGRES_DB -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD -p 5432:5432 postgres:latest
+    - dockerize -wait tcp://localhost:5432 -timeout 1m
     - mvn test
