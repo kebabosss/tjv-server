@@ -1,8 +1,14 @@
 image: maven:3.9-eclipse-temurin-17
 
 stages:
+  - docker
   - build
   - test
+
+docker-compose:
+  stage: docker
+  script:
+    - docker-compose up -d
 
 build:
   stage: build
