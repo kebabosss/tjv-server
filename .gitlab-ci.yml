@@ -1,4 +1,4 @@
-image: docker:20.10.16
+image: maven:3.8.6-openjdk-11
 
 services:
   - docker:dind
@@ -7,7 +7,6 @@ variables:
   DOCKER_HOST: tcp://docker:2375
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
-
   POSTGRES_USER: admin
   POSTGRES_PASSWORD: admin
   POSTGRES_DB: movie_postgres
