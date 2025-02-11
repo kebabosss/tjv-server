@@ -4,7 +4,8 @@ variables:
   POSTGRES_USER: admin
   POSTGRES_PASSWORD: admin
   POSTGRES_HOST: localhost
-  POSTGRES_PORT: 5454  
+  POSTGRES_PORT: 5454
+  DOCKER_HOST: tcp://docker:2375  
 
 stages:
   - docker
@@ -14,18 +15,12 @@ image:
   name: docker/compose:latest
 
 services:
-  - docker:19.03.12-dind
-
-
+  - docker:19.03.12-dind 
 
 docker:
   stage: docker
-  
   script:
-    - docker-compose up -d
-
-
-
+    - docker-compose up -d 
 
 test:
   stage: test
