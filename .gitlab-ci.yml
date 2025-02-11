@@ -1,30 +1,28 @@
-image: maven:3.9-eclipse-temurin-17
-
 stages:
-  - docker
-  - build
+  - setup
   - test
+  - deploy
+
+variables:
+  POSTGRES_DB: movie_postgres
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: admin
+  POSTGRES_HOST: localhost
+  POSTGRES_PORT: 5454
+
+services:
+  - name: docker:19.03.12-dind
+    alias: docker
 
 before_script:
-  - apt-get update && apt-get install -y apt-transport-https ca-certificates curl software-properties-common
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-  - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - apt-get update && apt-get install -y docker-ce
+  - apt-get update && apt-get install -y curl
   - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   - chmod +x /usr/local/bin/docker-compose
-
-docker-compose:
-  stage: docker
-  script:
-    - docker-compose up -d
-
-build:
-  stage: build
-  script:
-    - mvn clean compile
+  - docker info 
 
 test:
   stage: test
   script:
+    - echo "Waiting for PostgreSQL to start"
+    - dockerize -wait tcp://localhost:5432 -timeout 1m 
     - mvn test
-  allow_failure: false
