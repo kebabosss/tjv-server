@@ -1,24 +1,18 @@
 stages:
+  - build
   - test
 
 variables:
-  DOCKER_HOST: tcp://docker:2376
-  DOCKER_TLS_CERTDIR: "/certs"
-  DOCKER_TLS_VERIFY: 1
-  DB_HOST: docker  
-  DB_PORT: 5454    
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
 
-maven_test:
-  stage: test
-  image: maven:3.8.6-openjdk-11
-  services:
-    - name: docker:20.10.16-dind
-      alias: docker
-  before_script:
-    - apt-get update
-    - apt-get install -y docker.io python3-pip netcat
-    - pip3 install docker-compose
+build:
+  stage: build
+  image: maven:3.8.6-openjdk-17
   script:
-    - docker-compose up -d
-    - timeout 60 bash -c 'while ! nc -z $DB_HOST $DB_PORT; do sleep 2; done'
+    - mvn clean package -DskipTests  
+
+test:
+  stage: test
+  image: maven:3.8.6-openjdk-17
+  script:
     - mvn test
