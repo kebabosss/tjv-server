@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="fit.bitjv.semestral.mapper.MovieMapperTest" time="0.192" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="fit.bitjv.semestral.service.DirectorServiceTest" time="1.544" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -61,7 +61,46 @@
     <property name="java.class.version" value="61.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[semestral] "/>
   </properties>
-  <testcase name="testToEntityWithEmptyReviews" classname="fit.bitjv.semestral.mapper.MovieMapperTest" time="0.175"/>
-  <testcase name="testToEntity" classname="fit.bitjv.semestral.mapper.MovieMapperTest" time="0.007"/>
-  <testcase name="testToDTO" classname="fit.bitjv.semestral.mapper.MovieMapperTest" time="0.004"/>
+  <testcase name="directorCanBeCreated" classname="fit.bitjv.semestral.service.DirectorServiceTest" time="0.055">
+    <system-out><![CDATA[2025-02-11T22:02:45.246+01:00  INFO 29893 --- [semestral] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [fit.bitjv.semestral.service.DirectorServiceTest]: DirectorServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-02-11T22:02:45.257+01:00  INFO 29893 --- [semestral] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration fit.bitjv.semestral.SemestralApplication for test class fit.bitjv.semestral.service.DirectorServiceTest
+2025-02-11T22:02:45.262+01:00  INFO 29893 --- [semestral] [           main] o.s.b.d.r.RestartApplicationListener     : Restart disabled due to context in which it is running
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.4.2)
+
+2025-02-11T22:02:45.286+01:00  INFO 29893 --- [semestral] [           main] f.b.s.service.DirectorServiceTest        : Starting DirectorServiceTest using Java 17.0.14 with PID 29893 (started by kebabossss in /home/kebabossss/semestral-server)
+2025-02-11T22:02:45.286+01:00  INFO 29893 --- [semestral] [           main] f.b.s.service.DirectorServiceTest        : No active profile set, falling back to 1 default profile: "default"
+2025-02-11T22:02:45.459+01:00  INFO 29893 --- [semestral] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-02-11T22:02:45.470+01:00  INFO 29893 --- [semestral] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 3 JPA repository interfaces.
+2025-02-11T22:02:45.936+01:00  INFO 29893 --- [semestral] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-02-11T22:02:45.943+01:00  INFO 29893 --- [semestral] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-02-11T22:02:45.964+01:00  INFO 29893 --- [semestral] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-02-11T22:02:45.966+01:00  INFO 29893 --- [semestral] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2025-02-11T22:02:46.074+01:00  INFO 29893 --- [semestral] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@6d8d78a
+2025-02-11T22:02:46.083+01:00  INFO 29893 --- [semestral] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2025-02-11T22:02:46.088+01:00  WARN 29893 --- [semestral] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-02-11T22:02:46.090+01:00  INFO 29893 --- [semestral] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 15.10
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-02-11T22:02:46.182+01:00  INFO 29893 --- [semestral] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-02-11T22:02:46.236+01:00  INFO 29893 --- [semestral] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-02-11T22:02:46.446+01:00  WARN 29893 --- [semestral] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-02-11T22:02:46.475+01:00  INFO 29893 --- [semestral] [           main] o.s.v.b.OptionalValidatorFactoryBean     : Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-02-11T22:02:46.695+01:00  INFO 29893 --- [semestral] [           main] f.b.s.service.DirectorServiceTest        : Started DirectorServiceTest in 1.434 seconds (process running for 7.095)
+]]></system-out>
+  </testcase>
+  <testcase name="directorCanBeDeleted" classname="fit.bitjv.semestral.service.DirectorServiceTest" time="0.013"/>
+  <testcase name="duplicateDirectorCannotBeCreated" classname="fit.bitjv.semestral.service.DirectorServiceTest" time="0.01"/>
 </testsuite>

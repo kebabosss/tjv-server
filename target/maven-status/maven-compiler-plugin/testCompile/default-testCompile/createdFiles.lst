@@ -1,2 +1,4 @@
-fit/bitjv/semestral/mapper/MovieMapperTest.class
 fit/bitjv/semestral/SemestralApplicationTests.class
+fit/bitjv/semestral/mapper/MovieMapperTest.class
+fit/bitjv/semestral/rest/ReviewControllerTest.class
+fit/bitjv/semestral/service/DirectorServiceTest.class

@@ -4,10 +4,10 @@ fit/bitjv/semestral/rest/dto/MovieMapper.class
 fit/bitjv/semestral/rest/dto/ReviewMapper.class
 fit/bitjv/semestral/repository/MovieRepository.class
 fit/bitjv/semestral/repository/ReviewRepository.class
-fit/bitjv/semestral/rest/dto/DirectorDTO.class
 fit/bitjv/semestral/service/AbstractCrudService.class
-fit/bitjv/semestral/domain/Director.class
+fit/bitjv/semestral/rest/dto/DirectorDTO.class
 fit/bitjv/semestral/domain/Movie.class
+fit/bitjv/semestral/domain/Director.class
 fit/bitjv/semestral/rest/dto/ReviewDTO.class
 fit/bitjv/semestral/service/DirectorServices.class
 fit/bitjv/semestral/rest/ReviewController.class
