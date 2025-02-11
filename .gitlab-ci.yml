@@ -1,29 +1,26 @@
-variables:
-  DOCKER_DRIVER: overlay2
-  POSTGRES_DB: movie_postgres
-  POSTGRES_USER: admin
-  POSTGRES_PASSWORD: admin
-  POSTGRES_HOST: localhost
-  POSTGRES_PORT: 5454
-  DOCKER_HOST: tcp://docker:2375
-
-stages:
-  - docker
-  - test
-
-image: maven:3.8.4-jdk-11  
+image: docker:20.10.16
 
 services:
-  - name: docker:19.03.12-dind
-    alias: docker
-    entrypoint: ["dockerd", "--host=tcp://0.0.0.0:2375"]
+  - docker:dind
 
-docker:
-  stage: docker
-  script:
-    - docker-compose up -d
+variables:
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: admin
+  POSTGRES_DB: movie_postgres
+  SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/movie_postgres
+  SPRING_DATASOURCE_USERNAME: admin
+  SPRING_DATASOURCE_PASSWORD: admin
 
-test:
+stages:
+  - test
+
+before_script:
+  - apk add --no-cache py3-pip 
+  - pip install docker-compose
+
+maven-test:
   stage: test
   script:
-    - mvn test
+    - docker-compose up -d 
+    - mvn clean test 
+    - docker-compose down
