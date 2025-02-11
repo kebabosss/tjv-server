@@ -6,6 +6,7 @@ import fit.bitjv.semestral.domain.Review;
 import fit.bitjv.semestral.repository.DirectorRepository;
 import fit.bitjv.semestral.repository.MovieRepository;
 import jakarta.transaction.Transactional;
+import org.hibernate.DuplicateMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,7 +21,7 @@ public class MovieService extends AbstractCrudService<Movie, Long>{
     DirectorServices directorServices;
 
     @Autowired
-    public MovieService(JpaRepository<Movie, Long> repository, @Lazy DirectorServices directorServices) {
+    public MovieService(JpaRepository<Movie, Long> repository, DirectorServices directorServices) {
         super(repository);
         this.directorServices = directorServices;
     }
@@ -54,6 +55,11 @@ public class MovieService extends AbstractCrudService<Movie, Long>{
 
     @Override
     public Movie Create(Movie movie) {
+        List<Movie> duplicates = ((MovieRepository)repository).findMovieByNameAndReleaseYear(movie.getName(), movie.getReleaseYear());
+        if(!duplicates.isEmpty())
+        {
+            throw new IllegalArgumentException("Movie with this name and year aleready exists");
+        }
 
         for (Director d : movie.getDirectors())
         {
@@ -67,6 +73,13 @@ public class MovieService extends AbstractCrudService<Movie, Long>{
     @Override
     public Movie Update(Movie movie) {
         Movie existingMovie = repository.findById(movie.getId()).orElseThrow(() -> new IllegalArgumentException("Movie not found"));
+        List<Movie> duplicates = ((MovieRepository)repository).findMovieByNameAndReleaseYear(movie.getName(), movie.getReleaseYear());
+        if(!duplicates.isEmpty())
+        {
+            if(!duplicates.get(0).getId().equals(movie.getId())) {
+                throw new IllegalArgumentException("Movie with this name and year already exists");
+            }
+        }
         existingMovie.setName(movie.getName());
         existingMovie.setReleaseYear(movie.getReleaseYear());
 

@@ -32,4 +32,27 @@ public class DirectorServices extends AbstractCrudService<Director,Long> {
     {
         return ((DirectorRepository)repository).findAllByMoviesDirected_Id(movieId);
     }
+
+    @Override
+    public Director Create(Director entity) {
+        List<Director> duplicates = ((DirectorRepository)repository).findAllByNameAndYearOfBirth(entity.getName(), entity.getYearOfBirth());
+        if(!duplicates.isEmpty())
+        {
+            throw new IllegalArgumentException("Director with this name and year already exists");
+        }
+        return super.Create(entity);
+    }
+
+    @Override
+    public Director Update(Director entity) {
+        Director existingDirector = repository.findById(entity.getId()).orElseThrow(() -> new IllegalArgumentException("Director not found"));
+        List<Director> duplicates = ((DirectorRepository)repository).findAllByNameAndYearOfBirth(entity.getName(), entity.getYearOfBirth());
+        if(!duplicates.isEmpty())
+        {
+            if(!duplicates.get(0).getId().equals(entity.getId())) {
+                throw new IllegalArgumentException("Director with this name and year already exists");
+            }
+        }
+        return super.Update(entity);
+    }
 }

@@ -98,7 +98,13 @@ public class MovieController {
         }
         catch (IllegalArgumentException e)
         {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            if(e.getMessage().equals("Movie not found")) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+            else
+            {
+                throw new ResponseStatusException(HttpStatus.CONFLICT);
+            }
         }
     }
 

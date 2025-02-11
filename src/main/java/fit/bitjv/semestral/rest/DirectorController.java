@@ -81,7 +81,13 @@ public class DirectorController {
         }
         catch (IllegalArgumentException e)
         {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            if(e.getMessage().equals("Director not found")) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+            else
+            {
+                throw new ResponseStatusException(HttpStatus.CONFLICT);
+            }
         }
     }
 
