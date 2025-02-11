@@ -9,20 +9,20 @@ variables:
 
 build:
   stage: build
-  image: maven:3.8.6-openjdk-17 
+  image: maven:3.8-jdk-17
   script:
     - mvn clean package -DskipTests
 
 test:
   stage: test
-  image: maven:3.8.6-openjdk-17
+  image: maven:3.8.6-jdk-17
   services:
-    - docker:20.10.16-dind 
+    - docker:20.10.16-dind
   before_script:
     - apt-get update && apt-get install -y docker.io python3-pip netcat 
     - pip3 install docker-compose 
   script:
-    - docker-compose up -d
+    - docker-compose up -d  
     - echo "Čekám na inicializaci PostgreSQL (max 60 sekund)..."
-    - timeout 60 bash -c 'while ! nc -z $DB_HOST $DB_PORT; do sleep 2; done' 
-    - mvn test
+    - timeout 60 bash -c 'while ! nc -z $DB_HOST $DB_PORT; do sleep 2; done'  
+    - mvn test 
