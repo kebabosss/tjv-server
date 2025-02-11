@@ -11,18 +11,19 @@ stages:
   - docker
   - test
 
+image: maven:3.8.6-openjdk-17  # Použij image s OpenJDK 17
+
+services:
+  - name: docker:19.03.12-dind
+    alias: docker
+    entrypoint: ["dockerd", "--host=tcp://0.0.0.0:2375"]
+
 docker:
   stage: docker
-  image: docker/compose:latest
-  services:
-    - name: docker:19.03.12-dind
-      alias: docker
-      entrypoint: ["dockerd", "--host=tcp://0.0.0.0:2375"]
   script:
     - docker-compose up -d
 
 test:
   stage: test
-  image: maven:3.8.6-openjdk-11
   script:
     - mvn test
