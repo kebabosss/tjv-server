@@ -15,9 +15,9 @@ stages:
   - test
 
 before_script:
-  - |
-    apk add --no-cache py3-pip
-    pip install docker-compose PyYAML --only-binary=:all:
+  - apk add --no-cache py3-pip
+  - pip install --upgrade pip
+  - pip install docker-compose==2.20.0 PyYAML
 
 maven-test:
   stage: test
