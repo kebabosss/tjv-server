@@ -1,16 +1,28 @@
-image: maven:3.9-eclipse-temurin-17
+variables:
+  DOCKER_DRIVER: overlay2
+  POSTGRES_DB: movie_postgres
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: admin
+  POSTGRES_HOST: localhost
+  POSTGRES_PORT: 5454
+  DOCKER_HOST: tcp://docker:2375
 
 stages:
-  - build
+  - docker
   - test
 
-build:
-  stage: build
+docker:
+  stage: docker
+  image: docker/compose:latest
+  services:
+    - name: docker:19.03.12-dind
+      alias: docker
+      entrypoint: ["dockerd", "--host=tcp://0.0.0.0:2375"]
   script:
-    - mvn clean compile
+    - docker-compose up -d
 
 test:
   stage: test
+  image: maven:3.8.6-openjdk-11
   script:
     - mvn test
-  allow_failure: false
