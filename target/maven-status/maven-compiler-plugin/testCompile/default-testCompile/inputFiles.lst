@@ -1,4 +1,4 @@
 /home/kebabossss/semestral-server/src/test/java/fit/bitjv/semestral/SemestralApplicationTests.java
 /home/kebabossss/semestral-server/src/test/java/fit/bitjv/semestral/mapper/MovieMapperTest.java
-/home/kebabossss/semestral-server/src/test/java/rest/ReviewControllerTest.java
-/home/kebabossss/semestral-server/src/test/java/service/DirectorServiceTest.java
+/home/kebabossss/semestral-server/src/test/java/fit/bitjv/semestral/rest/ReviewControllerTest.java
+/home/kebabossss/semestral-server/src/test/java/fit/bitjv/semestral/service/DirectorServiceTest.java
