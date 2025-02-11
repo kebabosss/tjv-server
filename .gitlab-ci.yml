@@ -11,17 +11,17 @@ stages:
   - docker
   - test
 
-image:
-  name: docker/compose:latest
+image: maven:3.8.4-jdk-11  
 
 services:
   - name: docker:19.03.12-dind
     alias: docker
-    entrypoint: ["dockerd", "--host=tcp://0.0.0.0:2375"]  
+    entrypoint: ["dockerd", "--host=tcp://0.0.0.0:2375"]
+
 docker:
   stage: docker
   script:
-    - docker-compose up -d  
+    - docker-compose up -d
 
 test:
   stage: test
