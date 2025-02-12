@@ -1,15 +1,23 @@
 stages:
   - backend
-  
+
 backend:
   stage: backend
   image: jelastic/maven:3.9.5-openjdk-21
+  services:
+    - name: postgres:latest
+      alias: postgres
+  variables:
+    POSTGRES_DB: testdb
+    POSTGRES_USER: admin
+    POSTGRES_PASSWORD: admin
   before_script:
     - chmod +x mvnw
+    - echo "Waiting for PostgreSQL to be ready..."
+    - until pg_isready -h postgres -p 5454 -U admin; do sleep 1; done
   script:
-    - ./mvnw package
+    - ./mvnw test
   artifacts:
     name: "Maven artifacts from $CI_PROJECT_NAME on $CI_COMMIT_REF_SLUG"
     paths: 
       - "target"
-
