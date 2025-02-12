@@ -1,38 +1,15 @@
-variables:
-  GIT_DEPTH: 0
-  POSTGRES_USER: admin
-  POSTGRES_PASSWORD: admin
-  POSTGRES_DB: test_db
-
 stages:
-  - database
   - backend
-
-database:
-  stage: database
-  image: postgres:latest
-  services:
-    - postgres:latest
-  variables:
-    POSTGRES_USER: admin
-    POSTGRES_PASSWORD: admin
-    POSTGRES_DB: test_db
-  script:
-    - echo "Databáze PostgreSQL běží..."
-
-
+  
 backend:
   stage: backend
   image: jelastic/maven:3.9.5-openjdk-21
-  services:
-    - postgres:latest
   before_script:
-    - apt-get update && apt-get install -y docker-compose
-    - docker-compose up -d
-    - sleep 10
+    - chmod +x mvnw
   script:
-    - mvn clean test
+    - ./mvnw package
   artifacts:
     name: "Maven artifacts from $CI_PROJECT_NAME on $CI_COMMIT_REF_SLUG"
     paths: 
       - "target"
+
