@@ -1,27 +1,38 @@
-stages:
-  - build
-  - test
-
 variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-  DB_HOST: localhost
-  DB_PORT: 5454
+  GIT_DEPTH: 0
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: admin
+  POSTGRES_DB: test_db
 
-build:
-  stage: build
-  image: maven:3.8.7-openjdk-17
-  script:
-    - mvn clean package -DskipTests
+stages:
+  - database
+  - backend
 
-test:
-  stage: test
-  image: maven:3.8.7-openjdk-17
+database:
+  stage: database
+  image: postgres:latest
   services:
-    - docker:20.10.16-dind
-  before_script:
-    - apt-get update && apt-get install -y docker.io python3-pip netcat
-    - pip3 install docker-compose
+    - postgres:latest
+  variables:
+    POSTGRES_USER: admin
+    POSTGRES_PASSWORD: admin
+    POSTGRES_DB: test_db
   script:
+    - echo "Databáze PostgreSQL běží..."
+
+
+backend:
+  stage: backend
+  image: jelastic/maven:3.9.5-openjdk-21
+  services:
+    - postgres:latest
+  before_script:
+    - apk add --no-cache docker-compose
     - docker-compose up -d
-    - timeout 60 bash -c 'while ! nc -z $DB_HOST $DB_PORT; do sleep 2; done'
-    - mvn test
+    - sleep 10
+  script:
+    - mvn clean test
+  artifacts:
+    name: "Maven artifacts from $CI_PROJECT_NAME on $CI_COMMIT_REF_SLUG"
+    paths: 
+      - "target"
