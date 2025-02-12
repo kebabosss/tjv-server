@@ -14,7 +14,7 @@ backend:
   before_script:
     - chmod +x mvnw
     - echo "Waiting for PostgreSQL to be ready..."
-    - until pg_isready -h postgres -p 5454 -U admin; do sleep 1; done
+    - until nc -z postgres 5432; do sleep 1; done
   script:
     - ./mvnw test
   artifacts:
