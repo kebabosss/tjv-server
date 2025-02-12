@@ -1,0 +1,31 @@
+variables:
+  DOCKER_DRIVER: overlay2
+  POSTGRES_DB: movie_postgres
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: admin
+  POSTGRES_HOST: localhost
+  POSTGRES_PORT: 5454
+  DOCKER_HOST: tcp://docker:2375
+
+stages:
+  - docker
+  - test
+
+docker:
+  stage: docker
+  image: docker/compose:latest
+  services:
+    - name: docker:19.03.12-dind
+      alias: docker
+      entrypoint: ["dockerd", "--host=tcp://0.0.0.0:2375"]
+  script:
+    - docker-compose up -d
+
+test:
+  stage: test
+  image: jelastic/maven:3.9.5-openjdk-21
+  before_script:
+  - chmod +x mvnw
+  script:
+    - ./mvnw package
+
