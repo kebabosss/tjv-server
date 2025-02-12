@@ -9,11 +9,16 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.server.ResponseStatusException;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -25,30 +30,26 @@ public class ReviewControllerTest {
     @MockBean
     private ReviewService reviewService;
 
-    @MockBean
-    private MovieService movieService;
 
     @Test
-    public void RepeatedReviewCreationResultsInException() throws Exception {
+    public void ReviewUpdateWithInvalidIdThrowsNotFound() throws Exception {
 
-        // Příklad vytvoření reviewDTO objektu
         ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setReviewId(1L);
         reviewDTO.setMovieId(1L);
         reviewDTO.setRating(5);
         reviewDTO.setReviewText("Great movie!");
 
-        // Mockování chování ReviewService pro již existující recenzi
-        Mockito.when(reviewService.Create(Mockito.any(Review.class)))
+        Mockito.when(reviewService.Update(Mockito.any(Review.class)))
                 .thenThrow(IllegalArgumentException.class);
 
-        // Provádíme POST request na API pro vytvoření recenze
         mockMvc.perform(
-                MockMvcRequestBuilders
-                        .post("/rest/review")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(
-                                "{\n\"movieId\": 1,\n\"rating\": 5,\n\"reviewText\": \"Great movie!\"\n}")
-        )
-        .andExpect(MockMvcResultMatchers.status().isConflict()); // Očekáváme, že bude vrácen status 409
+                        MockMvcRequestBuilders
+                                .put("/rest/review/"+ reviewDTO.getReviewId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\n\"reviewId\": 1,\n\"movieId\": 1,\n\"rating\": 5,\n\"reviewText\": \"Great movie!\"\n}")
+                )
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }
