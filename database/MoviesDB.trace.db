@@ -31,3 +31,21 @@ Caused by: java.lang.AssertionError
 	at org.h2.mvstore.FileStore.executeFileStoreOperation(FileStore.java:1893)
 	at org.h2.mvstore.MVStore.executeFilestoreOperation(MVStore.java:922)
 	... 13 more
+2025-02-12 11:15:11.112584+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_REVIEW" already exists; SQL statement:
+create global temporary table HTE_review(rating integer, rn_ integer not null, id bigint, movie_id bigint, review_text varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-02-12 11:15:11.116592+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_DIRECTOR" already exists; SQL statement:
+create global temporary table HTE_director(rn_ integer not null, year_of_birth integer, id bigint, name varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-02-12 11:15:11.118513+01:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_MOVIE" already exists; SQL statement:
+create global temporary table HTE_movie(release_year integer, rn_ integer not null, id bigint, name varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-02-12 11:15:12.820858+01:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_REVIEW" already exists; SQL statement:
+create global temporary table HTE_review(rating integer, rn_ integer not null, id bigint, movie_id bigint, review_text varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-02-12 11:15:12.822766+01:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_DIRECTOR" already exists; SQL statement:
+create global temporary table HTE_director(rn_ integer not null, year_of_birth integer, id bigint, name varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
+2025-02-12 11:15:12.824774+01:00 jdbc[23]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "HTE_MOVIE" already exists; SQL statement:
+create global temporary table HTE_movie(release_year integer, rn_ integer not null, id bigint, name varchar(255), primary key (rn_)) TRANSACTIONAL [42101-232]
